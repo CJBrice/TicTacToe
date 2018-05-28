@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SpriteSwapOnClick : MonoBehaviour {
+
+    public GameController gameController;
+
+    Image m_Image;
+    public bool notClicked = true;
+
+    //Set this in the Inspector
+    [SerializeField] Sprite spriteChip;
+    [SerializeField] Sprite spriteClub;
+    [SerializeField] Sprite spriteDiamond;
+    [SerializeField] Sprite spriteHeart;
+
+    void Start()
+    {
+        m_Image = GetComponent<Image>();
+    }
+
+    public void ButtonClicked()
+    {
+        notClicked = false;   
+    }
+
+    void Update()
+    {
+        TeamStateHandle();
+    }
+
+    void TeamStateHandle()
+    {
+        if (notClicked == false)
+        {
+            //if (GameController.currentTeam.ToString() == "Chip")
+            if (GameController.currentTeam == GameController.PlayerTeam.Club)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    m_Image.sprite = spriteClub;
+                }
+            }
+
+            else if (GameController.currentTeam == GameController.PlayerTeam.Chip)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    m_Image.sprite = spriteChip;
+                }
+            }
+
+            else if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    m_Image.sprite = spriteDiamond;
+                }
+            }
+
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    m_Image.sprite = spriteHeart;
+                }
+            }
+        }
+    }
+}
