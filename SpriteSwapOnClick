@@ -1,20 +1,17 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpriteSwapOnClick : MonoBehaviour {
+public class SpriteSwapOnClick : MonoBehaviour
+{
 
     public GameController gameController;
 
     Image m_Image;
-    public bool notClicked = true;
 
-    //Set this in the Inspector
-    [SerializeField] Sprite spriteChip;
-    [SerializeField] Sprite spriteClub;
-    [SerializeField] Sprite spriteDiamond;
-    [SerializeField] Sprite spriteHeart;
+    public bool notClicked = true;
 
     void Start()
     {
@@ -23,50 +20,84 @@ public class SpriteSwapOnClick : MonoBehaviour {
 
     public void ButtonClicked()
     {
-        notClicked = false;   
+        notClicked = false;
     }
 
     void Update()
     {
-        TeamStateHandle();
-    }
-
-    void TeamStateHandle()
-    {
         if (notClicked == false)
         {
-            //if (GameController.currentTeam.ToString() == "Chip")
-            if (GameController.currentTeam == GameController.PlayerTeam.Club)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    m_Image.sprite = spriteClub;
-                }
+            if (gameController.moveCount % 2 == 0)  //Player 1 turn == true;
+            { 
+                TeamStateHandle2();
             }
-
-            else if (GameController.currentTeam == GameController.PlayerTeam.Chip)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    m_Image.sprite = spriteChip;
-                }
-            }
-
-            else if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    m_Image.sprite = spriteDiamond;
-                }
-            }
-
             else
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    m_Image.sprite = spriteHeart;
-                }
+                TeamStateHandle();
             }
         }
     }
+
+    public void TeamStateHandle()
+    {
+            if (GameController.currentTeam == GameController.PlayerTeam.Club)
+            {
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player X sprite to Club");
+                m_Image.sprite = gameController.sprites[0].sprite;
+                notClicked = true;
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Chip)
+            {
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player X sprite to Club");
+                m_Image.sprite = gameController.sprites[1].sprite;
+                notClicked = true;
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
+            {
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player X sprite to Club");
+                m_Image.sprite = gameController.sprites[2].sprite;
+                notClicked = true;
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Heart)
+            {
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player X sprite to Heart");
+                m_Image.sprite = gameController.sprites[3].sprite;
+                notClicked = true;
+            }
+    }
+
+
+    public void TeamStateHandle2()
+    {
+            if (GameController.currentTeam == GameController.PlayerTeam.Chip)
+            {
+                Debug.Log("SpriteSwapOnClick is setting player O sprite to Club");
+                m_Image.sprite = gameController.sprites[0].sprite; //Club
+                notClicked = true;
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Club)
+            {
+                Debug.Log("SpriteSwapOnClick is setting player O sprite to Chip");
+                m_Image.sprite = gameController.sprites[1].sprite; //Chip
+                notClicked = true;
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
+            {
+                Debug.Log("SpriteSwapOnClick is setting player O sprite to Club.diamond");
+                m_Image.sprite = gameController.sprites[0].sprite; //Club
+                notClicked = true;
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Heart)
+            {
+                Debug.Log("SpriteSwapOnClick is setting player O sprite to Club.chip");
+                m_Image.sprite = gameController.sprites[1].sprite; //Chip
+                notClicked = true;
+            }
+        }
 }
