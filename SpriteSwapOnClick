@@ -74,28 +74,28 @@ public class SpriteSwapOnClick : MonoBehaviour
     {
             if (GameController.currentTeam == GameController.PlayerTeam.Chip)
             {
-                Debug.Log("SpriteSwapOnClick is setting player O sprite to Club");
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player O sprite to Club");
                 m_Image.sprite = gameController.sprites[0].sprite; //Club
                 notClicked = true;
             }
 
             if (GameController.currentTeam == GameController.PlayerTeam.Club)
             {
-                Debug.Log("SpriteSwapOnClick is setting player O sprite to Chip");
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player O sprite to Chip");
                 m_Image.sprite = gameController.sprites[1].sprite; //Chip
                 notClicked = true;
             }
 
             if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
             {
-                Debug.Log("SpriteSwapOnClick is setting player O sprite to Club.diamond");
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player O sprite to Club.diamond");
                 m_Image.sprite = gameController.sprites[0].sprite; //Club
                 notClicked = true;
             }
 
             if (GameController.currentTeam == GameController.PlayerTeam.Heart)
             {
-                Debug.Log("SpriteSwapOnClick is setting player O sprite to Club.chip");
+                Debug.Log("Move # " + gameController.moveCount.ToString() + " is setting player O sprite to Club.chip");
                 m_Image.sprite = gameController.sprites[1].sprite; //Chip
                 notClicked = true;
             }
