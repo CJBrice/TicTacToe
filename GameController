@@ -19,15 +19,6 @@ public class PlayerColor
     public Color textColor;
 }
 
-[System.Serializable]
-public class PlayerSprite
-{
-    public Sprite playerSpriteChip;
-    public Sprite playerSpriteClub;
-    public Sprite playerSpriteDiamond;
-    public Sprite playerSpriteHeart;
-}
-
 public class GameController : MonoBehaviour {
 
     #region Declarations
@@ -37,28 +28,26 @@ public class GameController : MonoBehaviour {
     public GameObject restartButton;
     public Player playerX;
     public Player playerO;
+    public Player playerX1;
+    public Player playerO1;
     public PlayerColor activePlayerColor;
     public PlayerColor inactivePlayerColor;
-    public PlayerSprite playerSprites;
     public GameObject startInfo;
+
+    private SpriteSwapOnClick spriteSwap;
 
     #region Enumeration for State
     public enum PlayerTeam { Chip, Club, Diamond, Heart };
     public static PlayerTeam currentTeam;
+    //public static PlayerTeam opposingTeam;
     #endregion
 
-    private string playerSide;
+    public string playerSide;
     public string playerTeam;
-    private int moveCount;
-    private SpriteSwapOnClick spriteSwap;
+    public int moveCount;
 
-    public Image currentTeamImage;
+    public Image[] sprites;
 
-    public Image TeamChip;
-    public Image TeamClub;
-    public Image TeamDiamond;
-    public Image TeamHeart;
-    public Image defaultImage;
     #endregion
 
     void Awake()
@@ -71,7 +60,6 @@ public class GameController : MonoBehaviour {
 
     void StartGame()
     {
-
         SetBoardInteractable(true);
         SetPlayerButtons(false);
         startInfo.SetActive(false);
@@ -79,22 +67,6 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        SwapPlayerImage();
-        switch (currentTeam)
-        {
-            case PlayerTeam.Chip:
-                Debug.Log("Team is currently Chip");
-                break;
-            case PlayerTeam.Club:
-                Debug.Log("Team is currently Club");
-                break;
-            case PlayerTeam.Diamond:
-                Debug.Log("Team is currently Diamond");
-                break;
-            case PlayerTeam.Heart:
-                Debug.Log("Team is currently Heart");
-                break;
-        }
     }
 
     public void RestartGame()
@@ -109,7 +81,7 @@ public class GameController : MonoBehaviour {
         for (int i = 0; i < buttonList.Length; i++)
         {
             buttonList[i].text = "";
-            //buttonList[i].GetComponentInParent<Image>().overrideSprite = defaultSprite;
+            //buttonList[i].GetComponentInParent<Image>().overrideSprite;
         }
     }
 
@@ -123,35 +95,30 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-            SetGameOverText(playerSide + " Wins!");
+            SetGameOverText(currentTeam + " Wins!");
         }
         restartButton.SetActive(true);
     }
 
-    public void SwapPlayerImage()
+    /*
+    public void SetOpposingImage()
     {
         switch (currentTeam)
         {
             case PlayerTeam.Chip:
-                currentTeamImage = TeamChip;
-                Debug.Log("Current team image is Chip");
+                opposingTeam = PlayerTeam.Club;
                 break;
             case PlayerTeam.Club:
-                currentTeamImage = TeamClub;
-                Debug.Log("Current team image is Club");
+                opposingTeam = PlayerTeam.Chip;
                 break;
             case PlayerTeam.Diamond:
-                currentTeamImage = TeamDiamond;
-                Debug.Log("Current team image is Diamond");
+                opposingTeam = PlayerTeam.Club;
                 break;
             case PlayerTeam.Heart:
-                currentTeamImage = TeamHeart;
-                Debug.Log("Current team image is Heart");
+                opposingTeam = PlayerTeam.Chip;
                 break;
         }
-
-
-    }
+    }*/
 
     void SetGameControllerReferenceOnButtons()
     {
@@ -164,7 +131,6 @@ public class GameController : MonoBehaviour {
 
     public void EndTurn()
     {
-        SwapPlayerImage();
         moveCount++;
         if (buttonList[0].text == playerSide && buttonList[1].text == playerSide && buttonList[2].text == playerSide)
         {
@@ -216,7 +182,6 @@ public class GameController : MonoBehaviour {
 
     public void EndTurn4x4()
     {
-        SwapPlayerImage();
         moveCount++;
         if (buttonList[0].text == playerSide && buttonList[1].text == playerSide && buttonList[2].text == playerSide && buttonList[3].text == playerSide)
         {
@@ -285,12 +250,10 @@ public class GameController : MonoBehaviour {
         if (playerSide == "X")
         {
             SetPlayerColors(playerX, playerO);
-            
         }
         else
         {
             SetPlayerColors(playerO, playerX);
-            //SetPlayerSprite(Player2Sprite);
         }
     }
 
@@ -320,6 +283,8 @@ public class GameController : MonoBehaviour {
     {
         playerX.button.interactable = toggle;
         playerO.button.interactable = toggle;
+        playerX1.button.interactable = toggle;
+        playerO1.button.interactable = toggle;
     }
 
     void SetPlayerColorsInactive()
@@ -329,6 +294,7 @@ public class GameController : MonoBehaviour {
         playerO.panel.color = inactivePlayerColor.panelColor;
         playerO.text.color = inactivePlayerColor.textColor;
     }
+
 
     public void SetStartingTeam(string startingTeam)
     {
@@ -349,7 +315,7 @@ public class GameController : MonoBehaviour {
             currentTeam = PlayerTeam.Diamond;
         }
 
-        if (playerTeam == "Heart")
+        if (playerTeam == "Heart") 
         {
             currentTeam = PlayerTeam.Heart;
         }
@@ -358,15 +324,14 @@ public class GameController : MonoBehaviour {
     public void SetStartingSide(string startingSide)
     {
         playerSide = startingSide;
+
         if (playerSide == "X")
         {
             SetPlayerColors(playerX, playerO);
-            //SetPlayerSprite(Player1Sprite);
         }
         else
         {
             SetPlayerColors(playerO, playerX);
-            //SetPlayerSprite(Player2Sprite);
         }
 
         StartGame();
@@ -374,7 +339,6 @@ public class GameController : MonoBehaviour {
 
     public string GetPlayerSide()
     {
-        Debug.Log("Player side is " + playerSide);
         return playerSide;
     }
 }
