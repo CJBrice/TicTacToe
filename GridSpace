@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GridSpace : MonoBehaviour {
+
+    public Button button;
+    public Text buttonText;
+    public Image buttonImage;
+
+    private GameController gameController;
+
+    //If user chooses 3x3
+    public void SetSpace()
+    {
+        buttonText.text = gameController.GetPlayerSide();
+        buttonImage = button.GetComponent<Image>();
+        button.interactable = false;
+        gameController.EndTurn();
+    }
+
+    //If user chooses 4x4
+    public void SetSpace4x4()
+    {
+        buttonText.text = gameController.GetPlayerSide();
+        button.interactable = false;
+        gameController.EndTurn4x4();
+    }
+
+    public void SetGameControllerReference(GameController controller)
+    {
+        gameController = controller;
+    }
+}
