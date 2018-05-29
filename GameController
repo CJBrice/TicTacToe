@@ -34,11 +34,12 @@ public class GameController : MonoBehaviour {
     public PlayerColor inactivePlayerColor;
     public GameObject startInfo;
 
-    private SpriteSwapOnClick spriteSwap;
+    public SpriteSwapOnClick spriteSwap;
 
     #region Enumeration for State
     public enum PlayerTeam { Chip, Club, Diamond, Heart };
     public static PlayerTeam currentTeam;
+    public static PlayerTeam opposingTeam;
     //public static PlayerTeam opposingTeam;
     #endregion
 
@@ -67,6 +68,7 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
+        SetOpposingTeam();
     }
 
     public void RestartGame()
@@ -92,16 +94,26 @@ public class GameController : MonoBehaviour {
         {
             SetGameOverText("It's a draw!");
             SetPlayerColorsInactive();
+            restartButton.SetActive(true);
         }
         else
         {
-            SetGameOverText(currentTeam + " Wins!");
+            if (moveCount % 2 == 0)
+            {
+                SetGameOverText(opposingTeam + " Wins!");
+            }
+            else
+            {
+                SetGameOverText(currentTeam + " Wins!");
+            }
+
+            //SetGameOverText(currentTeam + " Wins!");
         }
         restartButton.SetActive(true);
     }
 
-    /*
-    public void SetOpposingImage()
+
+    public void SetOpposingTeam()
     {
         switch (currentTeam)
         {
@@ -118,7 +130,7 @@ public class GameController : MonoBehaviour {
                 opposingTeam = PlayerTeam.Chip;
                 break;
         }
-    }*/
+    }
 
     void SetGameControllerReferenceOnButtons()
     {
@@ -260,9 +272,9 @@ public class GameController : MonoBehaviour {
     void SetPlayerColors(Player newPlayer, Player oldPlayer)
     {
         newPlayer.panel.color = activePlayerColor.panelColor;
-        newPlayer.text.color = activePlayerColor.textColor;
+        //newPlayer.text.color = activePlayerColor.textColor;
         oldPlayer.panel.color = inactivePlayerColor.panelColor;
-        oldPlayer.text.color = inactivePlayerColor.textColor;
+        //oldPlayer.text.color = inactivePlayerColor.textColor;
     }
 
     void SetGameOverText(string value)
@@ -290,9 +302,9 @@ public class GameController : MonoBehaviour {
     void SetPlayerColorsInactive()
     {
         playerX.panel.color = inactivePlayerColor.panelColor;
-        playerX.text.color = inactivePlayerColor.textColor;
+        //playerX.text.color = inactivePlayerColor.textColor;
         playerO.panel.color = inactivePlayerColor.panelColor;
-        playerO.text.color = inactivePlayerColor.textColor;
+        //playerO.text.color = inactivePlayerColor.textColor;
     }
 
 
