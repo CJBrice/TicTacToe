@@ -7,7 +7,6 @@ public class GridSpace : MonoBehaviour {
 
     public Button button;
     public Text buttonText;
-    public Image buttonImage;
 
     private GameController gameController;
 
@@ -15,7 +14,6 @@ public class GridSpace : MonoBehaviour {
     public void SetSpace()
     {
         buttonText.text = gameController.GetPlayerSide();
-        buttonImage = button.GetComponent<Image>();
         button.interactable = false;
         gameController.EndTurn();
     }
