@@ -1,0 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SpriteSwap2 : MonoBehaviour
+{
+
+    public GameController gameController;
+
+    Image m_Image;
+
+    public bool notClicked = true;
+
+    void Start()
+    {
+        m_Image = GetComponent<Image>();
+    }
+
+    public void ButtonClicked()
+    {
+        notClicked = false;
+    }
+
+    void Update()
+    {
+        if (notClicked == true)
+        {
+            if (GameController.currentTeam == GameController.PlayerTeam.Chip)
+            {
+                m_Image.sprite = gameController.sprites[1].sprite; 
+
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Club)
+            {
+                m_Image.sprite = gameController.sprites[0].sprite; 
+
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
+            {
+                m_Image.sprite = gameController.sprites[2].sprite; 
+
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Heart)
+            {
+                m_Image.sprite = gameController.sprites[3].sprite; 
+
+            }
+        }
+
+        if (notClicked == false)
+            TeamStateHandle3();
+    }
+
+    void TeamStateHandle3()
+    {
+            if (GameController.currentTeam == GameController.PlayerTeam.Chip)
+            {
+                m_Image.sprite = gameController.sprites[0].sprite; //Club
+               
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Club)
+            {
+                m_Image.sprite = gameController.sprites[1].sprite; //Chip
+                
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Diamond)
+            {
+                m_Image.sprite = gameController.sprites[0].sprite; //Club
+                
+            }
+
+            if (GameController.currentTeam == GameController.PlayerTeam.Heart)
+            {
+                m_Image.sprite = gameController.sprites[1].sprite; //Chip
+                
+            }
+        }
+}   
