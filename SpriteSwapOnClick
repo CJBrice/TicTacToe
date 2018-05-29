@@ -12,6 +12,7 @@ public class SpriteSwapOnClick : MonoBehaviour
     Image m_Image;
 
     public bool notClicked = true;
+    public bool player1Turn = true;
 
     void Start()
     {
@@ -30,10 +31,12 @@ public class SpriteSwapOnClick : MonoBehaviour
             if (gameController.moveCount % 2 == 0)  //Player 1 turn == true;
             { 
                 TeamStateHandle2();
+                player1Turn = false;
             }
             else
             {
                 TeamStateHandle();
+                player1Turn = true;
             }
         }
     }
